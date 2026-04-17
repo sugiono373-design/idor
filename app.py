@@ -1,11 +1,9 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
-import os
+from flask import Flask, render_template, os
 
 app = Flask(__name__)
 app.secret_key = "super-secret-key-change-me"
 
-# Simulasi Database sederhana
-# Flag berada pada ID 0 yang seharusnya 'tersembunyi'
+# Database simulasi
 notes = {
     "0": {"title": "FLAG", "content": "RAVEN{ID0R_1s_St1ll_4l1v3_2026}", "author": "admin", "private": True},
     "1": {"title": "Belanja", "content": "Beli kopi dan susu.", "author": "user123", "private": False},
@@ -14,7 +12,7 @@ notes = {
 
 @app.route('/')
 def index():
-    # Menampilkan daftar catatan publik (ID 1 dan 2)
+    # Mengambil note yang tidak private
     public_notes = {k: v for k, v in notes.items() if not v['private']}
     return render_template('index.html', notes=public_notes)
 
@@ -22,6 +20,7 @@ def index():
 def view_note(note_id):
     note = notes.get(note_id)
     if note:
+        # Menghapus spasi aneh dan menggunakan f-string bersih
         return f"""
         <body style="background:#0a0a0a; color:#00ff41; font-family:monospace; padding:50px; text-align:center;">
             <div style="border:1px solid #333; display:inline-block; padding:30px; border-radius:10px;">
@@ -35,6 +34,7 @@ def view_note(note_id):
         """
     return "Note not found!", 404
 
+# Jalankan aplikasi (Hanya untuk lokal, Railway pakai Gunicorn)
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
