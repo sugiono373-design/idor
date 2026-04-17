@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head><title>Secret Note App</title></head>
+<body>
+    <h1>Public Notes</h1>
+    <ul>
+        {% for id, note in notes.items() %}
+        <li><a href="/view/{{ id }}">{{ note.title }}</a> by {{ note.author }}</li>
+        {% endfor %}
+    </ul>
+    </body>
+</html>
