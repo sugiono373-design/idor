@@ -22,7 +22,17 @@ def index():
 def view_note(note_id):
     note = notes.get(note_id)
     if note:
-        return f"<h1>{note['title']}</h1><p>{note['content']}</p><hr><a href='/'>Back</a>"
+        return f"""
+        <body style="background:#0a0a0a; color:#00ff41; font-family:monospace; padding:50px; text-align:center;">
+            <div style="border:1px solid #333; display:inline-block; padding:30px; border-radius:10px;">
+                <h1 style="border-bottom:1px solid #333; padding-bottom:10px;">{note['title']}</h1>
+                <p style="font-size:1.2em; margin:20px 0;">{note['content']}</p>
+                <hr style="border:0; border-top:1px solid #333;">
+                <br>
+                <a href="/" style="color:#aaa; text-decoration:none;">[ Back to Home ]</a>
+            </div>
+        </body>
+        """
     return "Note not found!", 404
 
 if __name__ == "__main__":
